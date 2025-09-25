@@ -5,6 +5,7 @@ import ThemeToggleButton from "../ThemeToggleButton";
 import { Link } from "react-router";
 import Navigator from "../Navigator";
 
+
 const Header = () => {
   return (
     <header className="w-full py-8 px-14 fixed top-0 left-0 right-0  backdrop-blur-xl border-b border-slate-700/40 z-50">
