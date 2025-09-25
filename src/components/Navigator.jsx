@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 
 const Navigator = ({ text, path, className }) => {
+ 
   return (
     <Link
       to={path}
