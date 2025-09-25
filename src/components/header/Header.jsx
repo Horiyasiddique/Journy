@@ -5,6 +5,7 @@ import ThemeToggleButton from "../ThemeToggleButton";
 import { Link } from "react-router";
 import Navigator from "../Navigator";
 
+
 const Header = () => {
   const navItems = [
     { name: "Home", path: "/" },
