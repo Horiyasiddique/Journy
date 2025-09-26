@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { databases } from "@/api/appwrite";
+import useAuth from "@/hooks/useAuth";
 
 
 const destinationsData = [
@@ -32,6 +34,24 @@ const destinationsData = [
 
 const Destinations = () => {
   const [search, setSearch] = useState("");
+  const [destinations1,setDestinations1]=useState([])
+  const {user}=useAuth()
+
+  useEffect(()=>{
+    
+(async ()=>{
+  const destinations=await databases.listDocuments({
+    databaseId:'68d44b0c002eb2b207f9',
+    collectionId:'destinations',
+    queries:[],
+  })
+  if (destinations){
+    console.log("Destinations",destinations)
+    console.log("USer",user)
+    setDestinations1(destinations)
+    }
+})()
+  },[])
 
   const filteredDestinations = destinationsData.filter((d) =>
     d.name.toLowerCase().includes(search.toLowerCase())
@@ -60,7 +80,7 @@ const Destinations = () => {
 
       {/* Cards Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredDestinations.map((dest) => (
+        {destinations1.map((dest) => (
           <div
             key={dest.id}
             className="rounded-2xl overflow-hidden shadow-lg group relative hover:shadow-2xl transition-all duration-300"

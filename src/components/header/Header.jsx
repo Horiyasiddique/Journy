@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { useContext } from "react";
 import themeContext from "@/context/themeContext";
+import useAuth from "@/hooks/useAuth";
 
 const Header = () => {
   const navItems = [
@@ -21,6 +22,8 @@ const Header = () => {
     { name: "Plan a Trip", path: "/planner" },
     { name: "Community", path: "/community" },
   ];
+
+  const {user}=useAuth()
 
   const {currentTheme} = useContext(themeContext)
   return (
@@ -57,7 +60,14 @@ const Header = () => {
           </div>
           {/* theme toggling functionality button */}
           <ThemeToggleButton />
-          <Navigator text={"Sign Up / Login"} path={"/auth/signup"} />
+
+          {
+            user ? (
+          <div>{user.name}</div>
+          ) : (
+            <Navigator text={"Sign Up / Login"} path={"/auth/signup"} />
+          )
+          }
         </div>
 
         {/* Mobile navbar */}
