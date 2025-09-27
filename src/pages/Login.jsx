@@ -2,14 +2,36 @@ import { useState } from "react";
 import Input from "../components/Input";
 import { Link } from "react-router";
 import Button from "../components/Button";
+import { useNavigate } from "react-router";
+import useAuth from "@/hooks/useAuth";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    console.log("Login with:", { email, password });
-  };
+  const navigate=useNavigate()
+
+  const {handleLogin}=useAuth()
+
+  async function handleSubmit(e){
+    e.preventDefault()
+    try {
+      await handleLogin(email,password,name)
+    console.log(email,  password)
+    
+    setEmail("")
+    setPassword("")
+    setTimeout(() => {
+      navigate('/')
+    }, 2000);
+    } catch (error) {
+      console.log("Error", error)
+      
+    }
+    
+    
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4">
@@ -18,8 +40,8 @@ const Login = () => {
           <h1 className="text-3xl font-bold">Welcome Back!</h1>
           <p className="text-sm opacity-70">Join us and start your journey</p>
         </div>
-
-        <div className="space-y-4 ">
+<form onSubmit={handleSubmit} className="space-y-4">
+        
           <Input
             label="Email Address"
             type="email"
@@ -35,9 +57,10 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
+    
 
-        <Button text="Login" onClick={handleLogin} className="w-full" />
+        <Button text="Login" type="submit" className="w-full" />
+        </form>
 
         <p className="text-sm text-center">
           Don't have an account?{" "}

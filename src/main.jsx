@@ -9,6 +9,10 @@ import AuthLayout from './AuthLayout.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Destinations from './pages/Destinations.jsx';
+import Planner from './pages/Planner';
+import Community from './pages/Community';
+import About from './pages/About';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -20,8 +24,24 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/about",
+        element: <About />,
+      },
+      {
         path: "/destinations",
         element: <Destinations />,
+      },
+      {
+        path: "/planner",
+        element: <Planner />,
+      },
+      {
+        path: "/community",
+        element: <Community />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
