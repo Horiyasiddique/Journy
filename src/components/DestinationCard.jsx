@@ -1,9 +1,28 @@
 import React, { useContext } from "react";
 import Button from "./Button";
 import themeContext from "@/context/themeContext";
+import useAuth from "@/hooks/useAuth";
+import { databases, ID } from "@/api/appwrite";
 
-const DestinationCard = ({ image, name, category, budget }) => {
+const DestinationCard = ({$id, image, name, category, budget }) => {
   const { currentTheme } = useContext(themeContext);
+
+  const {user}=useAuth()
+
+  async function addToFavorites(){
+    const favorites=await databases.createDocument(
+      "68d44b0c002eb2b207f9",
+      "favorites",
+      ID.unique(),
+      {
+        userId : user.$id,
+        destinationId : $id
+      }
+    )
+    if(favorites){
+      console.log("Favorites",favorites)
+    }
+  }
 
   return (
     <div
@@ -23,7 +42,7 @@ const DestinationCard = ({ image, name, category, budget }) => {
         <span className="text-xs italic opacity-80">Category: {category}</span>
         <span className="text-xs italic opacity-80">Budget: {budget}</span>
         <div className="mt-auto pt-3">
-          <Button text={"Add to Favorites ❤"} />
+          <Button text={"Add to Favorites ❤"} onClick={addToFavorites}/>
         </div>
       </div>
     </div>

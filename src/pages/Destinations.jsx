@@ -71,7 +71,7 @@ const Destinations = () => {
           //   </div>
           // </div>
 
-          <DestinationCard key={index} name={dest.name} image={dest.image} category={dest.category} budget={dest.budget}/>
+          <DestinationCard key={index} name={dest.name} image={dest.image} category={dest.category} budget={dest.budget} $id={dest.$id}/>
         ))}
       </div>
     </div>

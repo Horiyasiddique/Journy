@@ -1,19 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
 import Input from "../Input";
 import Button from "../Button";
-import { databases } from "@/api/appwrite";
+import { databases, ID } from "@/api/appwrite";
 import themeContext from "@/context/themeContext";
+import useAuth from "@/hooks/useAuth";
 
 const Form = () => {
   const [tripTitle, setTripTitle] = useState("");
   const [destinations, setDestinations] = useState([]);
-  const [startDate, setStartDate] = useState([]);
+  const [destinationID,setDestinationID] =useState("")
+  const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
   const [price, setPrice] = useState("");
   const { currentTheme } = useContext(themeContext);
+
+
+  const {user}=useAuth()
 
   useEffect(() => {
     (async () => {
@@ -28,6 +33,23 @@ const Form = () => {
       }
     })();
   }, []);
+
+  console.log("user",user)
+
+  async function handleSubmit(){
+    const trip=await databases.createDocument(
+      "68d462c6000af8895362",
+      "trips",
+      ID.unique(),
+      {
+        userId : user.$id,
+        destinationId: destinationID,
+        startDate : startDate,
+        endDate : endDate
+      
+      }
+    )
+  }
 
   return (
     <form className="w-full max-w-2xl mx-auto px-8 py-4 space-y-6 rounded-2xl border-[1px] border-slate-500">
@@ -52,7 +74,7 @@ const Form = () => {
     focus:ring-2 focus:ring-amber-400 focus:outline-none transition duration-300`}
       >
         {destinations.map((elem, index) => (
-          <option key={index} value={elem.name} className="py-2">
+          <option key={index} value={elem.name} className="py-2" onClick={()=>setDestinationID(elem.$id)}>
             {elem.name}
           </option>
         ))}
