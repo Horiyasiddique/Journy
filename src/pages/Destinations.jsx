@@ -5,36 +5,11 @@ import { databases } from "@/api/appwrite";
 import useAuth from "@/hooks/useAuth";
 
 
-const destinationsData = [
-  {
-    id: 1,
-    name: "Bali, Indonesia",
-    category: "Beach",
-    budget: "$800",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-  },
-  {
-    id: 2,
-    name: "Swiss Alps",
-    category: "Mountain",
-    budget: "$1200",
-    image:
-      "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?w=800&q=80",
-  },
-  {
-    id: 3,
-    name: "Paris, France",
-    category: "City",
-    budget: "$1000",
-    image:
-      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80",
-  },
-];
+
 
 const Destinations = () => {
   const [search, setSearch] = useState("");
-  const [destinations1,setDestinations1]=useState([])
+  const [destinations,setDestinations]=useState([])
   const {user}=useAuth()
 
   useEffect(()=>{
@@ -46,14 +21,14 @@ const Destinations = () => {
     queries:[],
   })
   if (destinations){
-    console.log("Destinations",destinations)
-    console.log("USer",user)
-    setDestinations1(destinations)
+    console.log("Destinations",destinations.documents)
+    console.log("User",user)
+    setDestinations(destinations.documents)
     }
 })()
   },[])
 
-  const filteredDestinations = destinationsData.filter((d) =>
+  const filteredDestinations = destinations.filter((d) =>
     d.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -80,9 +55,9 @@ const Destinations = () => {
 
       {/* Cards Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {destinations1.map((dest) => (
+        {filteredDestinations.map((dest,index) => (
           <div
-            key={dest.id}
+            key={index}
             className="rounded-2xl overflow-hidden shadow-lg group relative hover:shadow-2xl transition-all duration-300"
           >
             <img
