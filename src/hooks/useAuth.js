@@ -1,5 +1,5 @@
 import { getCurrentUser, login, logout, signup } from "@/api/auth";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function useAuth() {
   const [user, setUser] = useState();
@@ -16,26 +16,23 @@ export default function useAuth() {
     fetchUser();
   }, []);
 
+  async function handleSignup(email, password, name) {
+    await signup(email, password, name);
+    await login(email, password);
+    const currentUser = await getCurrentUser();
+    setUser(currentUser);
+  }
 
+  async function handleLogin(email, password) {
+    await login(email, password);
+    const currentUser = await getCurrentUser();
+    setUser(currentUser);
+  }
 
-async function handleSignup(email,password,name){
-    await signup(email,password,name)
-    const currentUser=await getCurrentUser()
-    setUser(currentUser)
-}
+  async function handleLogout() {
+    await logout();
+    setUser(null);
+  }
 
-async function handleLogin(email,password){
-    await login(email,password)
-    const currentUser=await getCurrentUser()
-    setUser(currentUser)
-}
-
-
-async function handleLogout(){
-    await logout()
-    setUser(null)
-}
-
-return {user, handleLogin, handleSignup, handleLogout}
-
+  return { user, handleLogin, handleSignup, handleLogout };
 }

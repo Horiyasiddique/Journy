@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import Button from "./Button";
 import themeContext from "@/context/themeContext";
-import useAuth from "@/hooks/useAuth";
-import { databases, ID } from "@/api/appwrite";
+import Navigator from "./Navigator";
 
-const DestinationCard = ({$id, image, name, category, budget }) => {
+const DestinationCard = ({ id, image, name, category, budget }) => {
   const { currentTheme } = useContext(themeContext);
 
   const {user}=useAuth()
@@ -38,11 +37,12 @@ const DestinationCard = ({$id, image, name, category, budget }) => {
 
       <div className="flex flex-col gap-3 p-5 flex-grow">
         <h3 className="text-xl font-semibold tracking-wide">{name}</h3>
-       
+
         <span className="text-xs italic opacity-80">Category: {category}</span>
         <span className="text-xs italic opacity-80">Budget: {budget}</span>
-        <div className="mt-auto pt-3">
-          <Button text={"Add to Favorites ❤"} onClick={addToFavorites}/>
+        <div className="mt-auto pt-3 flex justify-between items-center">
+          <Button text={"Add to Favorites ❤"} />
+          <Navigator path={`/destinations/${id}`} text={"Explore"} />
         </div>
       </div>
     </div>

@@ -54,24 +54,14 @@ const Destinations = () => {
       {/* Cards Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filteredDestinations.map((dest, index) => (
-          // <div
-          //   key={index}
-          //   className="rounded-2xl overflow-hidden shadow-lg group relative hover:shadow-2xl transition-all duration-300"
-          // >
-          //   <img
-          //     src={dest.image}
-          //     alt={dest.name}
-          //     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-          //   />
-          //   <div className="p-4 space-y-2">
-          //     <h2 className="text-lg font-semibold">{dest.name}</h2>
-          //     <p className="text-sm opacity-70">{dest.category}</p>
-          //     <p className="font-medium">{dest.budget}</p>
-          //     <Button text="Explore" className="mt-2" />
-          //   </div>
-          // </div>
-
-          <DestinationCard key={index} name={dest.name} image={dest.image} category={dest.category} budget={dest.budget} $id={dest.$id}/>
+          <DestinationCard
+            key={index}
+            id={dest.$id}
+            name={dest.name}
+            image={dest.image}
+            category={dest.category}
+            budget={dest.budget}
+          />
         ))}
       </div>
     </div>

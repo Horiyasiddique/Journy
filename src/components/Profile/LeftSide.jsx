@@ -2,10 +2,22 @@ import React, { useContext } from "react";
 import useAuth from "@/hooks/useAuth";
 import Button from "../Button";
 import themeContext from "@/context/themeContext";
+import { Navigate } from "react-router";
+import { toast } from "sonner";
 
 const LeftSide = () => {
-  const { user } = useAuth();
+  const { user, handleLogout } = useAuth();
   const { currentTheme } = useContext(themeContext);
+
+  async function handleUserLogout() {
+    try {
+      await handleLogout();
+      Navigate("/login");
+    } catch (error) {
+      console.error("Logout Error:", error);
+      toast.error("Logout failed. Please try again.");
+    }
+  }
 
   return (
     <div
@@ -23,7 +35,7 @@ const LeftSide = () => {
       </div>
 
       {/* logout button */}
-      <Button text={"Log Out"} onClick={() => {}} />
+      <Button text={"Log Out"} onClick={handleUserLogout} />
     </div>
   );
 };

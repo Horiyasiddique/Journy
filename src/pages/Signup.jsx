@@ -4,15 +4,14 @@ import { Link } from "react-router";
 import Button from "../components/Button";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-
-  const { handleSignup } = useAuth();
+  const navigate = useNavigate();const { handleSignup } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,11 +22,13 @@ const Signup = () => {
       setEmail("");
       setPassword("");
       setTimeout(() => {
-        navigate("/login");
+        toast.success("Signup successful!");
+        navigate("/profile");
       }, 2000);
     } catch (error) {
       console.log("Error", error);
       setError(error);
+      toast.error("Signup failed. Please try again.");
     }
   }
 

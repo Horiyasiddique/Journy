@@ -1,18 +1,20 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router'
-import MainLayout from './MainLayout.jsx';
-import Home from "./pages/Home.jsx"
-import ThemeContextProvider from './context/ThemeContextProvider.jsx'
-import AuthLayout from './AuthLayout.jsx';
-import Login from './pages/Login.jsx';
-import Signup from './pages/Signup.jsx';
-import Destinations from './pages/Destinations.jsx';
-import Planner from './pages/Planner';
-import Community from './pages/Community';
-import About from './pages/About';
-import Profile from './pages/Profile';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import MainLayout from "./MainLayout.jsx";
+import Home from "./pages/Home.jsx";
+import ThemeContextProvider from "./context/ThemeContextProvider.jsx";
+import AuthLayout from "./AuthLayout.jsx";
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
+import Destinations from "./pages/Destinations.jsx";
+import Planner from "./pages/Planner";
+import Community from "./pages/Community";
+import About from "./pages/About";
+import Profile from "./pages/Profile";
+import { Toaster } from "@/components/ui/sonner";
+import DestinationDetail from "./pages/DestinationDetail";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,11 @@ const router = createBrowserRouter([
         path: "/destinations",
         element: <Destinations />,
       },
+      {
+        path: "/destinations/:id",
+        element: <DestinationDetail />,
+      },
+
       {
         path: "/planner",
         element: <Planner />,
@@ -57,7 +64,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeContextProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={router} />
+      <Toaster richColors position="top-right" />
     </ThemeContextProvider>
   </StrictMode>
 );
