@@ -1,10 +1,10 @@
 import themeContext from "@/context/themeContext";
 import React, { useContext } from "react";
-import { FaHeart } from "react-icons/fa";
-import { FaPlaneDeparture } from "react-icons/fa";
+import { FaHeart, FaPlaneDeparture } from "react-icons/fa";
 
 const RightSide = () => {
-    const {currentTheme} = useContext(themeContext)
+  const { currentTheme } = useContext(themeContext);
+
   const favorites = [
     {
       image:
@@ -28,49 +28,51 @@ const RightSide = () => {
     {
       image:
         "https://i.pinimg.com/736x/5e/cb/11/5ecb1153d05344b5745bea7753acef8e.jpg",
-      name: "Greek Vide in Summer",
+      name: "Greek Vibe in Summer",
       destination: "Greece",
     },
   ];
+
   return (
-    <div className={`${currentTheme.card} w-3/4`}>
-      {/* my favorites part */}
+    <div className={`${currentTheme.card} w-full lg:w-3/4 p-6 space-y-8 rounded-2xl`}>
+      {/* My Favorites */}
       <div>
-        <h1>
-          My Favorites <FaHeart />
+        <h1 className="flex items-center gap-2 text-lg font-semibold mb-4">
+          My Favorites <FaHeart className="text-red-500" />
         </h1>
-        {/* favorites card container */}
-        <div>
-          {favorites.map((elem, index) => {
-            return (
-              //  favorite card
-              <div key={index}>
-                <img src={elem.image} alt={elem.name} />
-                <h2>{elem.name}</h2>
-              </div>
-            );
-          })}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {favorites.map((elem, index) => (
+            <div key={index} className="rounded-lg overflow-hidden border">
+              <img
+                src={elem.image}
+                alt={elem.name}
+                className="w-full h-32 object-cover"
+              />
+              <h2 className="p-2 text-sm font-medium">{elem.name}</h2>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* user own plan part */}
+      {/* My Plans */}
       <div>
-        <h1>
-          My Plans <FaPlaneDeparture />
+        <h1 className="flex items-center gap-2 text-lg font-semibold mb-4">
+          My Plans <FaPlaneDeparture className="text-blue-500" />
         </h1>
-        {/* user plans card container */}
-        <div>
-          <div>
-            {userPlans.map((elem, index) => {
-              return (
-                <div key={index}>
-                  <img src={elem.image} alt={elem.name} />
-                  <h2>{elem.name}</h2>
-                  <h4>{elem.destination}</h4>
-                </div>
-              );
-            })}
-          </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {userPlans.map((elem, index) => (
+            <div key={index} className="rounded-lg overflow-hidden border">
+              <img
+                src={elem.image}
+                alt={elem.name}
+                className="w-full h-32 object-cover"
+              />
+              <div className="p-2">
+                <h2 className="text-sm font-medium">{elem.name}</h2>
+                <h4 className="text-xs opacity-70">{elem.destination}</h4>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

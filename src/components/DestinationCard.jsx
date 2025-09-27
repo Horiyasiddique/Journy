@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Button from "./Button";
 import themeContext from "@/context/themeContext";
 
-const DestinationCard = ({ image, name, destination, description, category, budget }) => {
+const DestinationCard = ({ image, name, category, budget }) => {
   const { currentTheme } = useContext(themeContext);
 
   return (
@@ -12,17 +12,14 @@ const DestinationCard = ({ image, name, destination, description, category, budg
       <div className="overflow-hidden">
         <img
           src={image}
-          alt={destination}
+          alt={name}
           className="w-full h-56 object-cover transform transition-transform duration-500 hover:scale-105"
         />
       </div>
 
       <div className="flex flex-col gap-3 p-5 flex-grow">
         <h3 className="text-xl font-semibold tracking-wide">{name}</h3>
-        <h3 className="text-xl font-semibold tracking-wide">{destination}</h3>
-        <p className="text-sm font-light leading-relaxed line-clamp-3">
-          {description}
-        </p>
+       
         <span className="text-xs italic opacity-80">Category: {category}</span>
         <span className="text-xs italic opacity-80">Budget: {budget}</span>
         <div className="mt-auto pt-3">
