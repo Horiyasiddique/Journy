@@ -1,83 +1,121 @@
 import { useState } from "react";
-import Input from "../components/Input";
-import Button from "../components/Button";
-
-
-const destinationsData = [
-  {
-    id: 1,
-    name: "Bali, Indonesia",
-    category: "Beach",
-    budget: "$800",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-  },
-  {
-    id: 2,
-    name: "Swiss Alps",
-    category: "Mountain",
-    budget: "$1200",
-    image:
-      "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?w=800&q=80",
-  },
-  {
-    id: 3,
-    name: "Paris, France",
-    category: "City",
-    budget: "$1000",
-    image:
-      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80",
-  },
-];
+import HeroSection from "@/components/HeroSection";
+import Input from "@/components/Input";
+import DestinationCard from "@/components/DestinationCard";
 
 const Destinations = () => {
-  const [search, setSearch] = useState("");
+  const destinations = [
+    {
+      image:
+        "https://i.pinimg.com/736x/18/ae/4b/18ae4bd7f47957ebdd5cc03eb0fc22bf.jpg",
+      name: "Maldives",
+      description: "Tropical paradise with crystal-clear waters",
+      category: "beach",
+    },
+    {
+      image:
+        "https://i.pinimg.com/736x/38/33/5b/38335b8d98ebdb517dca32afe4663a3e.jpg",
+      name: "Dubai",
+      description: "City of luxury, shopping and skyscrapers",
+      category: "food",
+    },
+    {
+      image:
+        "https://i.pinimg.com/1200x/e0/31/a9/e031a96ec6e6ab68a940e24c14ca96e3.jpg",
+      name: "Bali",
+      description: "Beautiful beaches and cultural temples",
+      category: "beach",
+    },
+    {
+      image:
+        "https://i.pinimg.com/1200x/d9/5c/e6/d95ce6e5807d616d7cb7691316cb616e.jpg",
+      name: "Switzerland",
+      description: "Snowy mountains and scenic lakes",
+      category: "mountain",
+    },
+    {
+      image:
+        "https://i.pinimg.com/736x/b8/2e/33/b82e332473712b0f1b56b5b331970d5b.jpg",
+      name: "Paris",
+      description: "The city of love and iconic Eiffel Tower",
+      category: "food",
+    },
+    {
+      image:
+        "https://i.pinimg.com/1200x/a9/d1/7c/a9d17c025d5a391d550ea3b66af6c4af.jpg",
+      name: "Sawat",
+      description: "Peaceful valleys and rivers",
+      category: "mountain",
+    },
+  ];
 
-  const filteredDestinations = destinationsData.filter((d) =>
-    d.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  // filtering logic
+  const filteredDestinations = destinations.filter((d) => {
+    const matchCategory =
+      selectedCategory === "all" || d.category === selectedCategory;
+    const matchSearch = d.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchCategory && matchSearch;
+  });
+
+  const categories = ["all", "beach", "mountain", "food"];
 
   return (
-    <div className="px-6 py-10 max-w-6xl mx-auto space-y-8">
-      {/* Heading */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">Explore Destinations</h1>
-        <p className="text-sm opacity-70">
-          Find your next adventure by budget, category or name
-        </p>
-      </div>
+    <div className="mt-32">
+      {/* hero section */}
+      <HeroSection
+        heading={"Explore Destinations"}
+        image={
+          "https://i.pinimg.com/736x/e5/9f/8e/e59f8ef8afcb614bde688709511a6234.jpg"
+        }
+      />
 
-      {/* Search Bar */}
-      <div className="flex items-center gap-4 max-w-lg mx-auto">
+      {/* search + filter section */}
+      <div className="max-w-6xl mx-auto px-4 py-10 space-y-6">
+        {/* search bar */}
         <Input
           type="text"
-          placeholder="Search destinations..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          placeholder={"Search destinations by name"}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Button text="Search" />
-      </div>
 
-      {/* Cards Grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredDestinations.map((dest) => (
-          <div
-            key={dest.id}
-            className="rounded-2xl overflow-hidden shadow-lg group relative hover:shadow-2xl transition-all duration-300"
-          >
-            <img
-              src={dest.image}
-              alt={dest.name}
-              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="p-4 space-y-2">
-              <h2 className="text-lg font-semibold">{dest.name}</h2>
-              <p className="text-sm opacity-70">{dest.category}</p>
-              <p className="font-medium">{dest.budget}</p>
-              <Button text="Explore" className="mt-2" />
-            </div>
-          </div>
-        ))}
+        {/* category filter buttons */}
+        <div className="flex flex-wrap gap-4">
+          {categories.map((elem) => (
+            <button
+              key={elem}
+              onClick={() => setSelectedCategory(elem)}
+              className={`px-5 py-2 rounded-full border transition-all duration-300 ${
+                selectedCategory === elem
+                  ? "shadow-md scale-105 bg-gradient-to-r from-amber-300 to-rose-300 text-white"
+                  : "hover:shadow"
+              }`}
+            >
+              {elem.charAt(0).toUpperCase() + elem.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* destination cards */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredDestinations.map((d, index) => (
+            <DestinationCard
+              key={index}
+              image={d.image}
+              destination={d.name}
+              category={d.category}
+            ></DestinationCard>
+          ))}
+        </div>
+
+        {filteredDestinations.length === 0 && (
+          <p className="text-center text-sm italic mt-6">
+            No destinations match your search or filter.
+          </p>
+        )}
       </div>
     </div>
   );
