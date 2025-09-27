@@ -3,13 +3,9 @@ import { IoLogoFacebook } from "react-icons/io";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
 import ThemeToggleButton from "../ThemeToggleButton";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import Navigator from "../Navigator";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useContext } from "react";
 import themeContext from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
@@ -23,11 +19,11 @@ const Header = () => {
     { name: "Community", path: "/community" },
   ];
 
-  const {user}=useAuth()
+  const { user } = useAuth();
 
-  const {currentTheme} = useContext(themeContext)
+  const { currentTheme } = useContext(themeContext);
   return (
-    <header className="max-w-screen py-6 px-6 md:px-14 fixed top-0 left-0 right-0 backdrop-blur-xl border-b border-slate-700/40 z-50">
+    <header className="max-w-screen py-6 px-6 md:px-14 fixed top-0 left-0 right-0 backdrop-blur-lg border-b border-slate-700/40 z-50">
       <div className="flex items-center justify-between">
         {/* logo */}
         <div className="flex flex-col">
@@ -40,14 +36,18 @@ const Header = () => {
         {/* Desktop Navbar */}
         <nav className="hidden md:flex ml-12 lg:ml-24 items-center gap-8 lg:gap-12 rounded-full px-6 lg:px-8 py-3 shadow-sm border border-slate-200/40">
           {navItems.map((elem, index) => (
-            <Link
+            <NavLink
               key={index}
               to={elem.path}
-              className="relative group transition-colors duration-300"
+              className={({ isActive }) =>
+                `relative group transition-colors duration-300 ${
+                  isActive ? "border-b-[2px] border-amber-500" : "border-0"
+                }`
+              }
             >
               {elem.name}
               <span className="absolute left-0 bottom-[-2px] w-0 h-[2px] bg-amber-500 group-hover:w-full transition-all duration-300"></span>
-            </Link>
+            </NavLink>
           ))}
         </nav>
 
@@ -61,13 +61,13 @@ const Header = () => {
           {/* theme toggling functionality button */}
           <ThemeToggleButton />
 
-          {
-            user ? (
-          <div>{user.name}</div>
+          {user ? (
+            <Link to="/profile" className={`${currentTheme.card} w-12 h-12 rounded-full flex items-center justify-center text-amber-500 text-3xl font-bold`}>
+              {user.name.charAt(0).toUpperCase()}
+            </Link>
           ) : (
             <Navigator text={"Sign Up / Login"} path={"/auth/signup"} />
-          )
-          }
+          )}
         </div>
 
         {/* Mobile navbar */}

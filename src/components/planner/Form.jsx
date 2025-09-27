@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Input from "../Input";
 import Button from "../Button";
+import { databases } from "@/api/appwrite";
+import themeContext from "@/context/themeContext";
 
 const Form = () => {
   const [tripTitle, setTripTitle] = useState("");
-  const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState("");
+  const [destinations, setDestinations] = useState([]);
+  const [startDate, setStartDate] = useState([]);
   const [endDate, setEndDate] = useState("");
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
   const [price, setPrice] = useState("");
+  const { currentTheme } = useContext(themeContext);
+
+  useEffect(() => {
+    (async () => {
+      const destinations = await databases.listDocuments({
+        databaseId: "68d44b0c002eb2b207f9",
+        collectionId: "destinations",
+        queries: [],
+      });
+      if (destinations) {
+        console.log("Destinations", destinations.documents);
+        setDestinations(destinations.documents);
+      }
+    })();
+  }, []);
 
   return (
     <form className="w-full max-w-2xl mx-auto px-8 py-4 space-y-6 rounded-2xl border-[1px] border-slate-500">
@@ -23,14 +40,23 @@ const Form = () => {
         onChange={(e) => setTripTitle(e.target.value)}
       />
 
-      {/* Destination */}
-      <Input
-        label="Destination"
-        type="text"
-        placeholder="e.g., Maldives, Switzerland, Bali"
-        value={destination}
-        onChange={(e) => setDestination(e.target.value)}
-      />
+      <label htmlFor="destination" className="block text-sm font-medium mb-2">
+        Choose a Destination:
+      </label>
+
+      <select
+        name="destination"
+        id="destination"
+        className={`${currentTheme.background} ${currentTheme.text} 
+    w-full px-4 py-3 rounded-xl border border-slate-400 shadow-sm 
+    focus:ring-2 focus:ring-amber-400 focus:outline-none transition duration-300`}
+      >
+        {destinations.map((elem, index) => (
+          <option key={index} value={elem.name} className="py-2">
+            {elem.name}
+          </option>
+        ))}
+      </select>
 
       {/* Description */}
       <Input
@@ -41,7 +67,7 @@ const Form = () => {
         onChange={(e) => setDescription(e.target.value)}
       />
 
-{/*Price */}
+      {/*Price */}
       <Input
         label="Price"
         type="string"
@@ -93,4 +119,3 @@ const Form = () => {
 };
 
 export default Form;
-

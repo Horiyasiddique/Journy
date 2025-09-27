@@ -12,6 +12,7 @@ import Destinations from './pages/Destinations.jsx';
 import Planner from './pages/Planner';
 import Community from './pages/Community';
 import About from './pages/About';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/community",
         element: <Community />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

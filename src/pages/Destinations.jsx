@@ -3,6 +3,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { databases } from "@/api/appwrite";
 import useAuth from "@/hooks/useAuth";
+import HeroSection from "@/components/HeroSection";
 
 const Destinations = () => {
   const [search, setSearch] = useState("");
@@ -29,14 +30,14 @@ const Destinations = () => {
   );
 
   return (
-    <div className="px-6 py-10 max-w-6xl mx-auto space-y-8">
-      {/* Heading */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">Explore Destinations</h1>
-        <p className="text-sm opacity-70">
-          Find your next adventure by budget, category or name
-        </p>
-      </div>
+    <div className="mt-32">
+      {/* Hero section */}
+      <HeroSection
+        heading={"Explore Destinations"}
+        image={
+          "https://i.pinimg.com/736x/e5/9f/8e/e59f8ef8afcb614bde688709511a6234.jpg"
+        }
+      />
 
       {/* Search Bar */}
       <div className="flex items-center gap-4 max-w-lg mx-auto">
