@@ -1,0 +1,36 @@
+import React, { useContext } from "react";
+import Button from "./Button";
+import themeContext from "@/context/themeContext";
+
+const DestinationCard = ({ image, name, destination, description, category, budget }) => {
+  const { currentTheme } = useContext(themeContext);
+
+  return (
+    <div
+      className={`${currentTheme.card} overflow-hidden flex flex-col rounded-2xl border border-slate-500/30 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
+    >
+      <div className="overflow-hidden">
+        <img
+          src={image}
+          alt={destination}
+          className="w-full h-56 object-cover transform transition-transform duration-500 hover:scale-105"
+        />
+      </div>
+
+      <div className="flex flex-col gap-3 p-5 flex-grow">
+        <h3 className="text-xl font-semibold tracking-wide">{name}</h3>
+        <h3 className="text-xl font-semibold tracking-wide">{destination}</h3>
+        <p className="text-sm font-light leading-relaxed line-clamp-3">
+          {description}
+        </p>
+        <span className="text-xs italic opacity-80">Category: {category}</span>
+        <span className="text-xs italic opacity-80">Budget: {budget}</span>
+        <div className="mt-auto pt-3">
+          <Button text={"Add to Favorites ❤"} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DestinationCard;

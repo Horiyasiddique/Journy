@@ -3,34 +3,32 @@ import Input from "../components/Input";
 import { Link } from "react-router";
 import Button from "../components/Button";
 import useAuth from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const Signup = () => {
-     const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error,setError]=useState("")
-  const navigate=useNavigate()
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const {handleSignup}=useAuth()
+  const { handleSignup } = useAuth();
 
-  async function handleSubmit(e){
-    e.preventDefault()
+  async function handleSubmit(e) {
+    e.preventDefault();
     try {
-      await handleSignup(email,password,name)
-    console.log(email, name, password)
-    setName("")
-    setEmail("")
-    setPassword("")
-    setTimeout(() => {
-      navigate('/login')
-    }, 2000);
+      await handleSignup(email, password, name);
+      console.log(email, name, password);
+      setName("");
+      setEmail("");
+      setPassword("");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (error) {
-      console.log("Error", error)
-      setError(error)
+      console.log("Error", error);
+      setError(error);
     }
-    
-    
   }
 
   return (
@@ -39,10 +37,8 @@ const Signup = () => {
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold">Create Account</h1>
           <p className="text-sm opacity-70">Join us and start your journey</p>
-
         </div>
-<form onSubmit={handleSubmit} className="space-y-4">
-      
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             label="Full Name"
             type="text"
@@ -66,9 +62,8 @@ const Signup = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        
 
-        <Button text="Sign Up" type="submit" className="w-full" />
+          <Button text="Sign Up" type="submit" className="w-full" />
         </form>
 
         <p className="text-sm text-center">

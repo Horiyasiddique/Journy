@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "../components/Input";
 import { Link } from "react-router";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useAuth from "@/hooks/useAuth";
 
 

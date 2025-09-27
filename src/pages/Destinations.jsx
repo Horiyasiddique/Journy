@@ -4,29 +4,25 @@ import Button from "../components/Button";
 import { databases } from "@/api/appwrite";
 import useAuth from "@/hooks/useAuth";
 
-
-
-
 const Destinations = () => {
   const [search, setSearch] = useState("");
-  const [destinations,setDestinations]=useState([])
-  const {user}=useAuth()
+  const [destinations, setDestinations] = useState([]);
+  const { user } = useAuth();
 
-  useEffect(()=>{
-    
-(async ()=>{
-  const destinations=await databases.listDocuments({
-    databaseId:'68d44b0c002eb2b207f9',
-    collectionId:'destinations',
-    queries:[],
-  })
-  if (destinations){
-    console.log("Destinations",destinations.documents)
-    console.log("User",user)
-    setDestinations(destinations.documents)
-    }
-})()
-  },[])
+  useEffect(() => {
+    (async () => {
+      const destinations = await databases.listDocuments({
+        databaseId: "68d44b0c002eb2b207f9",
+        collectionId: "destinations",
+        queries: [],
+      });
+      if (destinations) {
+        console.log("Destinations", destinations.documents);
+        console.log("User", user);
+        setDestinations(destinations.documents);
+      }
+    })();
+  }, []);
 
   const filteredDestinations = destinations.filter((d) =>
     d.name.toLowerCase().includes(search.toLowerCase())
@@ -55,7 +51,7 @@ const Destinations = () => {
 
       {/* Cards Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredDestinations.map((dest,index) => (
+        {filteredDestinations.map((dest, index) => (
           <div
             key={index}
             className="rounded-2xl overflow-hidden shadow-lg group relative hover:shadow-2xl transition-all duration-300"
