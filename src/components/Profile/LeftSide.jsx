@@ -2,17 +2,17 @@ import React, { useContext } from "react";
 import useAuth from "@/hooks/useAuth";
 import Button from "../Button";
 import themeContext from "@/context/themeContext";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 const LeftSide = () => {
   const { user, handleLogout } = useAuth();
   const { currentTheme } = useContext(themeContext);
-
+  const navigate = useNavigate();
   async function handleUserLogout() {
     try {
       await handleLogout();
-      Navigate("/login");
+      navigate("/auth/login");
     } catch (error) {
       console.error("Logout Error:", error);
       toast.error("Logout failed. Please try again.");
