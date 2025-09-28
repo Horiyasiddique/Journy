@@ -4,7 +4,8 @@ import Button from "./Button";
 import { FaLocationDot } from "react-icons/fa6";
 import themeContext from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
-import { databases, ID, storage } from "@/api/appwrite";
+import { databases, ID, storage} from "@/api/appwrite";
+import { Query } from "appwrite";
 
 const CommunityCard = ({
   id,
@@ -42,8 +43,9 @@ const CommunityCard = ({
       const comments = await databases.listDocuments({
         databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
         collectionId: import.meta.env.VITE_APPWRITE_COMMENTS_COLLECTION_ID,
-        queries: [],
+        queries: [Query.equal("tripId", id)],
       });
+      console.log(comments)
       if (comments) {
         setComments(comments.documents);
       }
