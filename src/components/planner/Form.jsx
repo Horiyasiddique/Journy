@@ -21,19 +21,24 @@ const Form = () => {
 
   async function uploadImage(file) {
     const uploaded = await storage.createFile(
-      "your_bucket_id",
+      import.meta.env.VITE_APPWRITE_BUCKET_ID,
       ID.unique(),
       file
     );
 
-    return storage.getFilePreview("your_bucket_id", uploaded.$id).href;
+    // return both fileId and preview URL
+    return {
+      fileId: uploaded.$id,
+      previewUrl: storage.getFilePreview(import.meta.env.VITE_APPWRITE_BUCKET_ID, uploaded.$id).href,
+    };
+    // return storage.getFilePreview(import.meta.env.VITE_APPWRITE_BUCKET_ID, uploaded.$id).href;
   }
 
   useEffect(() => {
     (async () => {
       const destinations = await databases.listDocuments({
-        databaseId: "68d44b0c002eb2b207f9",
-        collectionId: "destinations",
+        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+        collectionId: import.meta.env.VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
         queries: [],
       });
       if (destinations) {
@@ -45,10 +50,11 @@ const Form = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const imageUrl = await uploadImage(photo);
+      // const imageUrl = await uploadImage(photo);
+      const { imageUrl, previewUrl } = await uploadImage(photo);
       const trip = await databases.createDocument(
-        "68d44b0c002eb2b207f9",
-        "trips",
+        import.meta.env.VITE_APPWRITE_DB_ID,
+        import.meta.env.VITE_APPWRITE_TRIPS_COLLECTION_ID,
         ID.unique(),
         {
           userId: user.$id,

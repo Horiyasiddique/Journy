@@ -13,8 +13,8 @@ const DestinationCard = ({ id, image, name, category, budget }) => {
 
   async function addToFavorites(){
     const favorites=await databases.createDocument(
-      "68d44b0c002eb2b207f9",
-      "favorites",
+      import.meta.env.VITE_APPWRITE_DB_ID,
+      import.meta.env.VITE_APPWRITE_FAVORITES_COLLECTION_ID,
       ID.unique(),
       {
         userId : user.$id,

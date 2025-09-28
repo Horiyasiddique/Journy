@@ -14,8 +14,8 @@ const Destinations = () => {
   useEffect(() => {
     (async () => {
       const destinations = await databases.listDocuments({
-        databaseId: "68d44b0c002eb2b207f9",
-        collectionId: "destinations",
+        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+        collectionId: import.meta.env.VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
         queries: [],
       });
       if (destinations) {

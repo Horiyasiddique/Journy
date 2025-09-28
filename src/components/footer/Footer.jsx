@@ -132,7 +132,7 @@ const Footer = () => {
               © 2024 Journy. All rights reserved.
             </p>
 
-            <p className="text-sm">Crafted with ❤️ and ☕ by Hooriya, Fara & Basel</p>
+            <p className="text-sm">Crafted with ❤️ and ☕ by Hooriya, Farah & Basel</p>
             <div className="flex space-x-6 text-sm">
               {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
                 (link) => (
