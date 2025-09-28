@@ -53,19 +53,19 @@ const Form = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-     if (
-       !tripTitle ||
-       !destinationID ||
-       !startDate ||
-       !endDate ||
-       !duration ||
-       !description ||
-       !photo ||
-       !budget
-     ) {
-       toast.error("All fields are required ❌");
-       return;
-     }
+    if (
+      !tripTitle ||
+      !destinationID ||
+      !startDate ||
+      !endDate ||
+      !duration ||
+      !description ||
+      !photo ||
+      !budget
+    ) {
+      toast.error("All fields are required ❌");
+      return;
+    }
     try {
       // const imageUrl = await uploadImage(photo);
       const { previewUrl, fileId } = await uploadImage(photo);
