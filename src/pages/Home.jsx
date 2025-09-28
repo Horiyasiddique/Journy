@@ -5,7 +5,7 @@ import HomeCta from '@/components/home/HomeCta'
 
 const Home = () => {
   return (
-    <div className='mt-36 flex flex-col items-center'>
+    <div className='mt-36 flex flex-col items-center justify-center'>
       <Hero />
       <FeaturedSection />
       <WhyTravelWithUs />

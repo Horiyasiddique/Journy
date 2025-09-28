@@ -37,7 +37,7 @@ const About = () => {
   ];
 
   return (
-    <div className="mt-36">
+    <div className="mt-36 flex flex-col justify-center items-center">
       {/* Hero Section */}
       <HeroSection
         image={

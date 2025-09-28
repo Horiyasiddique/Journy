@@ -30,7 +30,7 @@ const Community = () => {
   if (loading) return <Loader />;
 
   return (
-    <div className="mt-32">
+    <div className="mt-32 flex flex-col justify-center items-center">
       {/* Hero Section */}
       <HeroSection
         heading="Community Trips"
@@ -38,7 +38,7 @@ const Community = () => {
       />
 
       {/* Trips Section */}
-      <div className="max-w-6xl mx-auto grid gap-8 grid-cols-1 md:grid-cols-2 mt-12">
+      <div className="px-6 md:px-0 max-w-6xl mx-auto grid gap-8 grid-cols-1 md:grid-cols-2 mt-12">
         {trips.map((trip, index) => (
           <CommunityCard
             key={index}

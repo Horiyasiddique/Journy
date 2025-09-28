@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-[url(https://images.pexels.com/photos/38238/maldives-ile-beach-sun-38238.jpeg)] bg-cover bg-center bg-no-repeat rounded-none md:rounded-2xl">
+    <section className="relative w-[90vw] min-h-screen overflow-hidden bg-[url(https://images.pexels.com/photos/38238/maldives-ile-beach-sun-38238.jpeg)] bg-cover bg-center bg-no-repeat rounded-2xl md:rounded-2xl">
       <div className="absolute inset-0 bg-black/30"></div>
 
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4">

@@ -27,7 +27,7 @@ const Planner = () => {
   ];
 
   return (
-    <div className="mt-36">
+    <div className="mt-36 flex flex-col justify-center items-center">
       {/* Hero Section */}
       <HeroSection
         image="https://i.pinimg.com/736x/08/7a/25/087a251393203951b94d3563d7e2c1b8.jpg"
