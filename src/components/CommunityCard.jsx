@@ -64,7 +64,7 @@ const CommunityCard = ({
       {/* Image */}
       <div className="overflow-hidden">
         <img
-          src={storage.getFilePreview(import.meta.env.VITE_APPWRITE_BUCKET_ID, doc.image).href}
+          src={image}
           alt={title}
           className="w-full h-48 object-cover hover:scale-105 transition-all duration-300 ease-linear"
         />
