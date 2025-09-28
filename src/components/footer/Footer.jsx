@@ -138,10 +138,10 @@ const Footer = () => {
         <div className="border-t border-slate-500 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm">© 2024 Journy. All rights reserved.</p>
-
             <p className="text-sm">
-              Crafted with ❤️ and ☕ by Hooriya, Fara & Basel
+              Crafted with ❤️ and ☕ by Hooriya, Basel, & Farah
             </p>
+
             <div className="flex space-x-6 text-sm">
               {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
                 (link) => (

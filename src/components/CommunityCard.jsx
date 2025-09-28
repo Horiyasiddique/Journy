@@ -1,23 +1,59 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, use } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import { FaLocationDot } from "react-icons/fa6";
 import themeContext from "@/context/themeContext";
+import useAuth from "@/hooks/useAuth";
+import { databases, ID, storage } from "@/api/appwrite";
 
 const CommunityCard = ({
+  id,
   image,
   duration,
   title,
   destination,
-  description,
-}) => {
+  description }) => {
+
+  const { user } = useAuth()
+
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const { currentTheme } = useContext(themeContext);
 
+
+  /* Storing Comments into DB */
+  async function storeComments() {
+    const newComment = await databases.createDocument(
+      import.meta.env.VITE_APPWRITE_DB_ID,
+      import.meta.env.VITE_APPWRITE_COMMENTS_COLLECTION_ID,
+      ID.unique(),
+      {
+        userId: user.$id,
+        tripId: id,
+        name: user.name,
+        text: comment,
+      }
+    )
+  }
+
+  /* Fetching comments from DB */
+  useEffect(() => {
+    (async () => {
+      const comments = await databases.listDocuments({
+        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+        collectionId: import.meta.env.VITE_APPWRITE_COMMENTS_COLLECTION_ID,
+        queries: [],
+      });
+      if (comments) {
+        setComments(comments.documents);
+      }
+    })();
+
+  }, []);
+
   const commentHandler = () => {
     if (comment.trim() === "") return;
-    setComments([...comments, comment]);
+    storeComments();
     setComment("");
   };
 
@@ -28,7 +64,7 @@ const CommunityCard = ({
       {/* Image */}
       <div className="overflow-hidden">
         <img
-          src={image}
+          src={storage.getFilePreview(import.meta.env.VITE_APPWRITE_BUCKET_ID, doc.image).href}
           alt={title}
           className="w-full h-48 object-cover hover:scale-105 transition-all duration-300 ease-linear"
         />
@@ -65,7 +101,11 @@ const CommunityCard = ({
                 key={i}
                 className={`${currentTheme.background} ${currentTheme.text}  text-sm  px-3 py-2 rounded-lg`}
               >
-                {comment}
+                <div key={comment.$id}>
+                  <p>{comment.text}</p>
+                  <small>By: {comment.name}</small>
+                </div>
+
               </p>
             ))}
           </div>

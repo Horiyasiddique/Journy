@@ -12,7 +12,7 @@ const About = () => {
       desc: "Bringing designs to life with React, Tailwind, and smooth user experiences.",
     },
     {
-      name: "Fara",
+      name: "Farah",
       role: "Backend Developer",
       img: "https://i.pinimg.com/736x/9b/47/6d/9b476d7eae809a0363d51e0b842ce6ad.jpg",
       desc: "Crafting powerful APIs, managing databases, and ensuring app security.",

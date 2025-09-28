@@ -37,8 +37,15 @@ const Destinations = () => {
         }
       } catch (err) {
         console.error("Error fetching destinations:", err);
+      const destinations = await databases.listDocuments({
+        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+        collectionId: import.meta.env.VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
+        queries: [],
+      });
+      if (destinations) {
+        setDestinations(destinations.documents);
       }
-    })();
+  }})();
   }, []);
 
   // filter logic
