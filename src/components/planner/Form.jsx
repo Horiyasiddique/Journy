@@ -29,7 +29,7 @@ const Form = () => {
     // return both fileId and preview URL
     return {
       fileId: uploaded.$id,
-      previewUrl: storage.getFilePreview(import.meta.env.VITE_APPWRITE_BUCKET_ID, uploaded.$id).href,
+      previewUrl: storage.getFileView(import.meta.env.VITE_APPWRITE_BUCKET_ID, uploaded.$id),
     };
     // return storage.getFilePreview(import.meta.env.VITE_APPWRITE_BUCKET_ID, uploaded.$id).href;
   }
@@ -51,7 +51,7 @@ const Form = () => {
     e.preventDefault();
     try {
       // const imageUrl = await uploadImage(photo);
-      const { imageUrl, previewUrl } = await uploadImage(photo);
+      const {previewUrl , fileId}= await uploadImage(photo);
       const trip = await databases.createDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_TRIPS_COLLECTION_ID,
@@ -62,7 +62,8 @@ const Form = () => {
           startDate: startDate,
           endDate: endDate,
           description: description,
-          image: imageUrl,
+          imageId:fileId,
+          image: previewUrl,
           title: tripTitle,
           isPublic: true,
           duration: duration,
