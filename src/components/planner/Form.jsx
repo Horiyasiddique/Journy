@@ -132,6 +132,9 @@ const Form = () => {
     w-full px-4 py-3 rounded-xl border border-slate-400 shadow-sm 
     focus:ring-2 focus:ring-amber-400 focus:outline-none transition duration-300`}
       >
+        <option value="" disabled hidden>
+          Select
+        </option>
         {destinations.map((elem) => (
           <option key={elem.$id} value={elem.$id} className="py-2">
             {elem.name}

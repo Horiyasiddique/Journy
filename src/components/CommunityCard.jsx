@@ -45,7 +45,7 @@ const CommunityCard = ({
         collectionId: import.meta.env.VITE_APPWRITE_COMMENTS_COLLECTION_ID,
         queries: [Query.equal("tripId", id)],
       });
-      console.log(comments)
+      //console.log(comments)
       if (comments) {
         setComments(comments.documents);
       }

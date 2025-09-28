@@ -2,12 +2,16 @@ import { databases } from "@/api/appwrite";
 import themeContext from "@/context/themeContext";
 import React, { useContext, useEffect, useState } from "react";
 import { FaHeart, FaPlaneDeparture } from "react-icons/fa";
+import useAuth from "@/hooks/useAuth";
+import { account } from "../../api/appwrite";
+import { Query } from "appwrite"
 
 const RightSide = () => {
   const { currentTheme } = useContext(themeContext);
+  const { user } = useAuth()
 
+  const [userId, setUserId] = useState(null);
   const [favorites, setFavorites] = useState([]);
-
   const [userPlans, setUserPlans] = useState([]);
 
   // const favorites1 = [
@@ -38,56 +42,79 @@ const RightSide = () => {
   //   },
   // ];
 
+  // Step 1: Get the current signed-in user
   useEffect(() => {
     (async () => {
-      const favoriteDestinations = await databases.listDocuments({
-        databaseId: "68d44b0c002eb2b207f9",
-        collectionId: "favorites",
-        queries: [],
-      });
-      if (favoriteDestinations) {
-        setFavorites(favoriteDestinations.documents);
+      try {
+        const currentUser = await account.get();
+        setUserId(currentUser.$id);
+      } catch (err) {
+        console.error("No user logged in:", err);
       }
-    })()
-    
-  }, []);
-   
-  useEffect(() => {
-    (async () => {
-      
-      const tripsRes = await databases.listDocuments({
-        databaseId:"68d44b0c002eb2b207f9",
-        collectionId:"trips",
-        queries:[]
-      }
-      );
-  
-      
-      const destinationsRes = await databases.listDocuments({
-        databaseId:"68d44b0c002eb2b207f9",
-        collectionId:"destinations",
-        queries:[]
-      }
-      );
-  
-    
-      const merged = tripsRes.documents.map(trip => {
-        const dest = destinationsRes.documents.find(
-          d => d.$id === trip.destinationId
-        );
-        return {
-          ...trip,
-          destinationName: dest?.name || "Unknown"
-        };
-      });
-      if (merged){
-        console.log("merge",merged)
-      }
-  
-      setUserPlans(merged);
     })();
   }, []);
-  
+
+  useEffect(() => {
+    if (!userId) return;
+
+    (async () => {
+      try {
+        const response = await databases.listDocuments(
+          import.meta.env.VITE_APPWRITE_DB_ID,
+          import.meta.env.VITE_APPWRITE_FAVORITES_COLLECTION_ID,
+          [Query.equal("userId", userId)]
+        );
+
+        setFavorites(response.documents);
+      } catch (error) {
+        console.error("Error fetching favorites:", error);
+      }
+    })();
+  }, [userId]);
+
+  useEffect(() => {
+    if (!userId) return;
+    (async () => {
+      try {
+        const tripsRes = await databases.listDocuments({
+          databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+          collectionId: import.meta.env.VITE_APPWRITE_TRIPS_COLLECTION_ID,
+          queries: [Query.equal("userId", userId)],
+        }
+        );
+
+
+        const destinationsRes = await databases.listDocuments({
+          databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+          collectionId: import.meta.env.VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
+          queries: [],
+        }
+        );
+
+
+        const merged = tripsRes.documents.map(trip => {
+          const dest = destinationsRes.documents.find(
+            d => d.$id === trip.destinationId
+          );
+          return {
+            ...trip,
+            destinationName: dest?.name || "Unknown"
+          };
+        });
+        if (merged) {
+          console.log("merge", merged)
+        }
+
+        setUserPlans(merged);
+        console.log(userPlans)
+
+      } catch (error) {
+        console.error("Error fetching Plans:", error);
+
+      }
+    })();
+  }, [userId]);
+
 
   return (
     <div
@@ -126,7 +153,7 @@ const RightSide = () => {
                 className="w-full h-32 object-cover"
               />
               <div className="p-2">
-                <h2 className="text-sm font-medium">{elem.name}</h2>
+                <h2 className="text-sm font-medium">{elem.title}</h2>
                 <h4 className="text-xs opacity-70">{elem.destinationName}</h4>
               </div>
             </div>
