@@ -11,43 +11,39 @@ const FeaturedSection = () => {
         "Wild Safari Tours",
         "Extreme Sports Packages",
       ],
-      ctaLink: "/adventure",
     },
     {
       imageUrl:
         "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg",
-      category: "Relaxation & Wellness",
+      category: "Beaches",
       experiences: [
-        "Luxury Spa Retreats",
-        "Beachside Yoga Sessions",
-        "Meditation Getaways",
-        "Hot Spring Resorts",
+        "White sand beaches",
+        "Crystal clear water",
+        "Fresh sea food",
+        "Ocean sun sets",
       ],
-      ctaLink: "/wellness",
     },
     {
       imageUrl:
         "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg",
-      category: "Cultural Immersion",
+      category: "City",
       experiences: [
-        "Ancient Temple Tours",
-        "Local Festival Experiences",
-        "Traditional Craft Workshops",
-        "Historical City Walks",
+        "Local markets",
+        "Landmark tours",
+        "street food",
+        "Night life",
       ],
-      ctaLink: "/culture",
     },
     {
       imageUrl:
         "https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg",
-      category: "Food & Wine Tours",
+      category: "Mountains",
       experiences: [
-        "Local Culinary Classes",
-        "Vineyard Wine Tasting",
-        "Street Food Adventures",
-        "Gourmet Dining Experiences",
+        "Paranomic Views",
+        "Nature hiking",
+        "Cozy Cabins",
+        "Adventure trecking",
       ],
-      ctaLink: "/food-tours",
     },
   ];
 
@@ -64,7 +60,7 @@ const FeaturedSection = () => {
               imageUrl={exp.imageUrl}
               category={exp.category}
               experiences={exp.experiences}
-              ctaLink={exp.ctaLink}
+              ctaLink={"/destinations"}
             />
           ))}
         </div>

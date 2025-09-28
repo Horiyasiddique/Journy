@@ -74,18 +74,27 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Popular Destinations</h3>
             <ul className="space-y-2">
               {[
-                "Bali, Indonesia",
-                "Paris",
-                "Maldives",
-                "Switzerland",
-                "Sawat, Pakistan",
+                {
+                  name: "Bali, Indonesia",
+                  path: "/destinations/68d58c2e000dd7ee5981",
+                },
+                { name: "Paris", path: "/destinations/68d58bbd00263024111a" },
+                {
+                  name: "Maldives",
+                  path: "/destinations/68d7c2b6001d866d08d7",
+                },
+                { name: "Rome", path: "/destinations/68d7c1fd003830562e1b" },
+                {
+                  name: "Cappadocia",
+                  path: "/destinations/68d7c1ba00259f90d1c7",
+                },
               ].map((destination) => (
                 <li key={destination}>
                   <Link
-                    to="#"
+                    to={destination.path}
                     className="hover:text-amber-400 transition-colors duration-300"
                   >
-                    {destination}
+                    {destination.name}
                   </Link>
                 </li>
               ))}
@@ -119,7 +128,7 @@ const Footer = () => {
                   placeholder="Enter your email"
                   className="placeholder:text-slate-500 px-3 py-2 border border-slate-500 rounded-lg  focus:outline-none focus:border-amber-400 flex-1"
                 />
-                <Navigator text={"Subscribe"}/>
+                <Navigator text={"Subscribe"} />
               </div>
             </div>
           </div>
@@ -128,11 +137,11 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-slate-500 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm">
-              © 2024 Journy. All rights reserved.
-            </p>
+            <p className="text-sm">© 2024 Journy. All rights reserved.</p>
 
-            <p className="text-sm">Crafted with ❤️ and ☕ by Hooriya, Fara & Basel</p>
+            <p className="text-sm">
+              Crafted with ❤️ and ☕ by Hooriya, Fara & Basel
+            </p>
             <div className="flex space-x-6 text-sm">
               {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
                 (link) => (
