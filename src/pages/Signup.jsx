@@ -34,13 +34,15 @@ const Signup = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4">
-      <div className="w-full max-w-md  backdrop-blur-md rounded-2xl shadow-2xl border-[1px] border-amber-400 py-8 px-28 space-y-6">
+    <div className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md backdrop-blur-md rounded-2xl shadow-2xl border-[1px] border-amber-400 py-6 sm:py-8 px-6 sm:px-8 md:px-28 space-y-4 sm:space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold">Create Account</h1>
-          <p className="text-sm opacity-70">Join us and start your journey</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">Create Account</h1>
+          <p className="text-xs sm:text-sm opacity-70">
+            Join us and start your journey
+          </p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
           <Input
             label="Full Name"
             type="text"
@@ -68,7 +70,7 @@ const Signup = () => {
           <Button text="Sign Up" type="submit" className="w-full" />
         </form>
 
-        <p className="text-sm text-center">
+        <p className="text-xs sm:text-sm text-center">
           Already have an account?{" "}
           <Link
             to="/auth/login"
