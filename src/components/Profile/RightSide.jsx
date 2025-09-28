@@ -80,6 +80,9 @@ const RightSide = () => {
           destinationName: dest?.name || "Unknown"
         };
       });
+      if (merged){
+        console.log("merge",merged)
+      }
   
       setUserPlans(merged);
     })();
@@ -123,7 +126,7 @@ const RightSide = () => {
                 className="w-full h-32 object-cover"
               />
               <div className="p-2">
-                <h2 className="text-sm font-medium">{elem.title}</h2>
+                <h2 className="text-sm font-medium">{elem.name}</h2>
                 <h4 className="text-xs opacity-70">{elem.destinationName}</h4>
               </div>
             </div>

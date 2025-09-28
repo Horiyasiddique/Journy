@@ -4,6 +4,7 @@ import Button from "../Button";
 import { databases, ID, storage } from "@/api/appwrite";
 import themeContext from "@/context/themeContext";
 import useAuth from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const Form = () => {
   const [tripTitle, setTripTitle] = useState("");
@@ -29,12 +30,11 @@ const Form = () => {
     // return both fileId and preview URL
     return {
       fileId: uploaded.$id,
-      previewUrl: storage.getFilePreview(
+      previewUrl: storage.getFileView(
         import.meta.env.VITE_APPWRITE_BUCKET_ID,
         uploaded.$id
-      ).href,
+      ),
     };
-    // return storage.getFilePreview(import.meta.env.VITE_APPWRITE_BUCKET_ID, uploaded.$id).href;
   }
 
   useEffect(() => {
@@ -52,9 +52,23 @@ const Form = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+     if (
+       !tripTitle ||
+       !destinationID ||
+       !startDate ||
+       !endDate ||
+       !duration ||
+       !description ||
+       !photo ||
+       !budget
+     ) {
+       toast.error("All fields are required ❌");
+       return;
+     }
     try {
       // const imageUrl = await uploadImage(photo);
-      const { imageUrl, previewUrl } = await uploadImage(photo);
+      const { previewUrl, fileId } = await uploadImage(photo);
       const trip = await databases.createDocument(
         import.meta.env.VITE_APPWRITE_DB_ID,
         import.meta.env.VITE_APPWRITE_TRIPS_COLLECTION_ID,
@@ -65,7 +79,8 @@ const Form = () => {
           startDate: startDate,
           endDate: endDate,
           description: description,
-          image: imageUrl,
+          imageId: fileId,
+          image: previewUrl,
           title: tripTitle,
           isPublic: true,
           duration: duration,
@@ -74,9 +89,19 @@ const Form = () => {
 
       if (trip) {
         console.log("Trip", trip);
+        toast.success("Trip uploaded successfully 🎉");
+        setTripTitle("");
+        setDestinationID("");
+        setStartDate("");
+        setEndDate("");
+        setDuration("");
+        setDescription("");
+        setPhoto("");
+        setBudget("");
       }
     } catch (error) {
       console.log("Error", error);
+      toast.error("Something went wrong while uploading 😢");
     }
   }
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import CommunityCard from "@/components/CommunityCard";
 import { databases } from "@/api/appwrite";
-import useAuth from "@/hooks/useAuth";
 
 const Community = () => {
   const [trips, setTrips] = useState([]);
