@@ -5,6 +5,7 @@ import { databases } from "@/api/appwrite";
 import useAuth from "@/hooks/useAuth";
 import HeroSection from "@/components/HeroSection";
 import DestinationCard from "@/components/DestinationCard";
+import Loader from "@/components/Loader";
 
 const Destinations = () => {
   const [search, setSearch] = useState("");
@@ -12,6 +13,7 @@ const Destinations = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -37,15 +39,19 @@ const Destinations = () => {
         }
       } catch (err) {
         console.error("Error fetching destinations:", err);
-      const destinations = await databases.listDocuments({
-        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
-        collectionId: import.meta.env.VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
-        queries: [],
-      });
-      if (destinations) {
-        setDestinations(destinations.documents);
+        const destinations = await databases.listDocuments({
+          databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+          collectionId: import.meta.env
+            .VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
+          queries: [],
+        });
+        if (destinations) {
+          setDestinations(destinations.documents);
+        }
+      } finally {
+        setLoading(false);
       }
-  }})();
+    })();
   }, []);
 
   // filter logic
@@ -63,6 +69,7 @@ const Destinations = () => {
     return matchesSearch && matchesCategory;
   });
 
+  if (loading) return <Loader />;
   return (
     <div className="mt-28 px-4 sm:px-6 lg:px-8">
       {/* Hero section */}

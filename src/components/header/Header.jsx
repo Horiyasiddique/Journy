@@ -62,7 +62,10 @@ const Header = () => {
           <ThemeToggleButton />
 
           {user ? (
-            <Link to="/profile" className={`${currentTheme.card} w-12 h-12 rounded-full flex items-center justify-center text-amber-500 text-3xl font-bold`}>
+            <Link
+              to="/profile"
+              className={`${currentTheme.card} w-12 h-12 rounded-full flex items-center justify-center text-amber-500 text-3xl font-bold`}
+            >
               {user.name.charAt(0).toUpperCase()}
             </Link>
           ) : (
@@ -99,7 +102,16 @@ const Header = () => {
                 </div>
 
                 <ThemeToggleButton />
-                <Navigator text={"Sign Up / Login"} path={"/auth/signup"} />
+                {user ? (
+                  <Link
+                    to="/profile"
+                    className={`${currentTheme.card} w-12 h-12 rounded-full flex items-center justify-center text-amber-500 text-3xl font-bold`}
+                  >
+                    {user.name.charAt(0).toUpperCase()}
+                  </Link>
+                ) : (
+                  <Navigator text={"Sign Up / Login"} path={"/auth/signup"} />
+                )}
               </div>
             </SheetContent>
           </Sheet>

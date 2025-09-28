@@ -2,22 +2,32 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import CommunityCard from "@/components/CommunityCard";
 import { databases } from "@/api/appwrite";
+import Loader from "@/components/Loader";
 
 const Community = () => {
   const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const trips = await databases.listDocuments({
-        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
-        collectionId: import.meta.env.VITE_APPWRITE_TRIPS_COLLECTION_ID,
-        queries: [],
-      });
-      if (trips) {
-        setTrips(trips.documents);
+      try {
+        const trips = await databases.listDocuments({
+          databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+          collectionId: import.meta.env.VITE_APPWRITE_TRIPS_COLLECTION_ID,
+          queries: [],
+        });
+        if (trips) {
+          setTrips(trips.documents);
+        }
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
+
+  if (loading) return <Loader />;
 
   return (
     <div className="mt-32">

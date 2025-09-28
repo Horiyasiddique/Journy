@@ -5,6 +5,7 @@ import Navigator from "./Navigator";
 import { ID } from "appwrite";
 import useAuth from "@/hooks/useAuth";
 import { databases } from "@/api/appwrite";
+import { toast } from "sonner";
 
 const DestinationCard = ({ id, image, name, category, budget }) => {
   const { currentTheme } = useContext(themeContext);
@@ -25,6 +26,7 @@ const DestinationCard = ({ id, image, name, category, budget }) => {
     );
     if (favorites) {
       console.log("Favorites", favorites);
+      toast.success("Added to Favorites successfully! 🎉");
     }
   }
 
