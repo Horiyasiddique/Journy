@@ -49,5 +49,5 @@ A modern, interactive travel planning platform that helps users discover destina
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/journy-travel.git
-   cd journy-travel
+   git clone https://github.com/Horiyasiddique/journy.git
+   cd journy
