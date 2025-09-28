@@ -37,7 +37,7 @@ A modern, interactive travel planning platform that helps users discover destina
 
 ## 🚀 Live Demo
 
-[**Live Website Link**](https://your-live-link-here.com) <!-- Add your actual link here -->
+[**Live Website Link**](https://journy-pi.vercel.app/) 
 
 ## 👥 Development Team
 
