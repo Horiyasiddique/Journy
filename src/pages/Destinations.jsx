@@ -19,8 +19,6 @@ const Destinations = () => {
         queries: [],
       });
       if (destinations) {
-        console.log("Destinations", destinations.documents);
-        console.log("User", user);
         setDestinations(destinations.documents);
       }
     })();

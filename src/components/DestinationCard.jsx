@@ -2,6 +2,9 @@ import React, { useContext } from "react";
 import Button from "./Button";
 import themeContext from "@/context/themeContext";
 import Navigator from "./Navigator";
+import { ID } from "appwrite";
+import useAuth from "@/hooks/useAuth";
+import { databases } from "@/api/appwrite";
 
 const DestinationCard = ({ id, image, name, category, budget }) => {
   const { currentTheme } = useContext(themeContext);
@@ -15,7 +18,9 @@ const DestinationCard = ({ id, image, name, category, budget }) => {
       ID.unique(),
       {
         userId : user.$id,
-        destinationId : $id
+        destinationId : id,
+        name:name,
+        image:image
       }
     )
     if(favorites){
@@ -41,7 +46,7 @@ const DestinationCard = ({ id, image, name, category, budget }) => {
         <span className="text-xs italic opacity-80">Category: {category}</span>
         <span className="text-xs italic opacity-80">Budget: {budget}</span>
         <div className="mt-auto pt-3 flex justify-between items-center">
-          <Button text={"Add to Favorites ❤"} />
+          <Button text={"Add to Favorites ❤"} onClick={addToFavorites}/>
           <Navigator path={`/destinations/${id}`} text={"Explore"} />
         </div>
       </div>
