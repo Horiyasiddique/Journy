@@ -4,11 +4,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaHeart, FaPlaneDeparture } from "react-icons/fa";
 import useAuth from "@/hooks/useAuth";
 import { account } from "../../api/appwrite";
-import { Query } from "appwrite"
+import { Query } from "appwrite";
 
 const RightSide = () => {
   const { currentTheme } = useContext(themeContext);
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   const [userId, setUserId] = useState(null);
   const [favorites, setFavorites] = useState([]);
@@ -80,41 +80,32 @@ const RightSide = () => {
           databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
           collectionId: import.meta.env.VITE_APPWRITE_TRIPS_COLLECTION_ID,
           queries: [Query.equal("userId", userId)],
-        }
-        );
-
+        });
 
         const destinationsRes = await databases.listDocuments({
           databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
-          collectionId: import.meta.env.VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
+          collectionId: import.meta.env
+            .VITE_APPWRITE_DESTINATIONS_COLLECTION_ID,
           queries: [],
-        }
-        );
+        });
 
-
-        const merged = tripsRes.documents.map(trip => {
+        const merged = tripsRes.documents.map((trip) => {
           const dest = destinationsRes.documents.find(
-            d => d.$id === trip.destinationId
+            (d) => d.$id === trip.destinationId
           );
           return {
             ...trip,
-            destinationName: dest?.name || "Unknown"
+            destinationName: dest?.name || "Unknown",
           };
         });
         if (merged) {
           setUserPlans(merged);
         }
-
-        
-        
-
       } catch (error) {
         console.error("Error fetching Plans:", error);
-
       }
     })();
   }, [userId]);
-
 
   return (
     <div
