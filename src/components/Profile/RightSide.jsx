@@ -102,10 +102,10 @@ const RightSide = () => {
           };
         });
         if (merged) {
-          console.log("merge", merged)
+          setUserPlans(merged);
         }
 
-        setUserPlans(merged);
+        
         
 
       } catch (error) {
