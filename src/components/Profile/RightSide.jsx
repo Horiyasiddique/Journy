@@ -106,7 +106,7 @@ const RightSide = () => {
         }
 
         setUserPlans(merged);
-        console.log(userPlans)
+        
 
       } catch (error) {
         console.error("Error fetching Plans:", error);

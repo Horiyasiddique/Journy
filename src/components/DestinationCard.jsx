@@ -9,24 +9,28 @@ import { toast } from "sonner";
 
 const DestinationCard = ({ id, image, name, category, budget }) => {
   const { currentTheme } = useContext(themeContext);
+  
 
-  const { user } = useAuth();
+  const {user}=useAuth()
 
-  async function addToFavorites() {
-    const favorites = await databases.createDocument(
+  async function addToFavorites(){
+    if(!user){
+      toast.error("Please login first in order to add to favorites")
+      return
+    }
+    const favorites=await databases.createDocument(
       import.meta.env.VITE_APPWRITE_DB_ID,
       import.meta.env.VITE_APPWRITE_FAVORITES_COLLECTION_ID,
       ID.unique(),
       {
-        userId: user.$id,
-        destinationId: id,
-        name: name,
-        image: image,
+        userId : user.$id,
+        destinationId : id,
+        name:name,
+        image:image
       }
-    );
-    if (favorites) {
-      console.log("Favorites", favorites);
-      toast.success("Added to Favorites successfully! 🎉");
+    )
+    if(favorites){
+      console.log("Favorites",favorites)
     }
   }
 
@@ -48,7 +52,7 @@ const DestinationCard = ({ id, image, name, category, budget }) => {
         <span className="text-xs italic opacity-80">Category: {category}</span>
         <span className="text-xs italic opacity-80">Budget: {budget}</span>
         <div className="mt-auto pt-3 flex justify-between items-center">
-          <Button text={"Add to Favorites ❤"} onClick={addToFavorites} />
+          <Button text={"Add to Favorites ❤"} onClick={addToFavorites}/>
           <Navigator path={`/destinations/${id}`} text={"Explore"} />
         </div>
       </div>
